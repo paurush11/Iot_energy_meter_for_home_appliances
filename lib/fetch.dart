@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
-
+import 'widgets/powercalc.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -14,8 +14,7 @@ class Fetch extends StatefulWidget {
 }
 
 class _FetchState extends State<Fetch> {
-  var _url = Uri.parse(
-      "https://api.thingspeak.com/channels/1235406/feeds.json?api_key=5EO2GGRKJNKWPJV0");
+  var _url = Uri.parse("https://api.thingspeak.com/channels/1235406/feeds.json?api_key=5EO2GGRKJNKWPJV0");
   late StreamController _postsController;
 
   String name = "";
@@ -42,10 +41,10 @@ class _FetchState extends State<Fetch> {
 
 
   final LinearGradient gradientColors =
-  LinearGradient(colors: [ Colors.blue[50]!,
+  LinearGradient(colors: [ Colors.blue[100]!,
     Colors.blue[200]!,
-    Colors.blue], stops:[
-  0.0,0.5,1.0
+    Colors.blue[400]!], stops:[
+  1.0,0.2,1.0
       ]);
 
   @override
@@ -71,7 +70,9 @@ class _FetchState extends State<Fetch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Your Bill Meter"),
+        title: Text("Bill Summary"),
+        centerTitle: true,
+        backgroundColor: Color(0xff003033),
       ),
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -107,7 +108,7 @@ class _FetchState extends State<Fetch> {
               int val = snapshot.data['channel']['last_entry_id'];
               print(val);
               print("------------------");
-              List<_PowerCalc> zamana = [];
+              List<PowerCalc> zamana = [];
               List<_InstantPowerData> data = [];
               for (int i = 0; i < val; i++) {
                 String newdate = "";
@@ -121,7 +122,7 @@ class _FetchState extends State<Fetch> {
                 newdate += DateFormat.Hms().format(basedate);
                 dates.add(newdate);
                 int value = int.parse(snapshot.data['feeds'][i]['field1']);
-                zamana.add(_PowerCalc(value.abs(), basedate));
+                zamana.add(PowerCalc(value.abs(), basedate));
                 data.add(_InstantPowerData(newdate, value));
               }
               double netpower = 0.0;
@@ -201,9 +202,9 @@ class _FetchState extends State<Fetch> {
                         legend: Legend(isVisible: true),
                         tooltipBehavior: TooltipBehavior(enable: true,
                             borderColor: Colors.blueGrey,
-                            borderWidth: 5,
+                            borderWidth: 3,
                             tooltipPosition: TooltipPosition.pointer,
-                            color: Colors.blue[900]),
+                            color: Color(0xff001A33)),
                         series: <ChartSeries<_InstantPowerData, String>>[
                           AreaSeries<_InstantPowerData, String>(
                               dataSource: data,
@@ -234,8 +235,4 @@ class _InstantPowerData {
   final int values;
 
 }
-class _PowerCalc{
-  _PowerCalc(this.val, this.date);
-  final DateTime date;
-  final int val;
-}
+
