@@ -178,10 +178,20 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: MediaQuery.of(context).size.height,
                     child: Column(
                       children: [
-                        Expanded(
-                          child: Container(
-                          child: Text("Total Power Consumed -- ${netpower.ceil()}"),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          width: MediaQuery.of(context).size.width*.8,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 4,
+                              color: Color(0xff003033)
+                            )
                           ),
+                        child: Center(
+                          child: Text("Total Power Consumed -- ${netpower.ceil()}", style: TextStyle(
+                            fontSize: 20
+                          ),),
+                        ),
                         ),
                       ],
                     ),
