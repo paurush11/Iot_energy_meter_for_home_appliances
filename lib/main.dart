@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:iot_application_energy_meter/fetch.dart';
 import 'package:http/http.dart' as http;
@@ -175,29 +176,82 @@ class _MyHomePageState extends State<MyHomePage> {
                   print(netpower);
 
                   return Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: Column(
+                    height: MediaQuery.of(context).size.height*.8,
+                    child: ListView(
                       children: [
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          width: MediaQuery.of(context).size.width*.8,
+                          width: MediaQuery.of(context).size.width*.9,
                           decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 4,
-                              color: Color(0xff003033)
-                            )
+                              border: Border.all(
+                                  color: Color(0xff003033),
+                              ),
+                              borderRadius: BorderRadius.circular(10)
                           ),
-                        child: Center(
-                          child: Text("Total Power Consumed -- ${netpower.ceil()}", style: TextStyle(
-                            fontSize: 20
-                          ),),
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            child: Text("IOT Based Smart Energy Meter", textAlign: TextAlign.center, style: TextStyle(
+                              fontSize: 40,
+                            ),),
+                          ),
                         ),
-                        ),
+                        CardBill(imgaddr: "assets/image/threshold.jpg", text: "Set Threshold",),
+                        CardBill(imgaddr: "assets/image/icon-electronic.png", text: "View Power Usage",),
+                        CardBill(imgaddr: "assets/image/bill.png", text: "Generate Bill",),
+
+
                       ],
                     ),
                   );
                 }),
           )),
+    );
+  }
+}
+
+class CardBill extends StatelessWidget {
+  CardBill({required this.imgaddr, required this.text});
+  final String imgaddr;
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: (){
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => Fetch()));
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        width: MediaQuery.of(context).size.width*.9,
+
+        decoration: BoxDecoration(
+            border: Border.all(
+                width: 4,
+                color: Color(0xff003033)
+            ),
+          borderRadius: BorderRadius.circular(10)
+        ),
+        child: Container(
+
+          child: Column(
+            children: [
+              Image(image: AssetImage("$imgaddr"),height: 150,fit: BoxFit.fill,),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                width: MediaQuery.of(context).size.width*.9,
+                color: Color(0xff003033),
+                child: Text("$text", textAlign: TextAlign.center, style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white
+                ),),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
