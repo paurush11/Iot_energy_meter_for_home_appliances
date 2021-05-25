@@ -7,6 +7,8 @@ import 'dart:convert' as convert;
 
 import 'package:iot_application_energy_meter/widgets/powercalc.dart';
 
+import 'Generatebill.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -195,9 +197,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),),
                           ),
                         ),
-                        CardBill(imgaddr: "assets/image/threshold.jpg", text: "Set Threshold",),
-                        CardBill(imgaddr: "assets/image/icon-electronic.png", text: "View Power Usage",),
-                        CardBill(imgaddr: "assets/image/bill.png", text: "Generate Bill",),
+                        CardBill(imgaddr: "assets/image/threshold.jpg", text: "Set Threshold", Id: 1,),
+                        CardBill(imgaddr: "assets/image/icon-electronic.png", text: "View Power Usage", Id: 2, ),
+                        CardBill(imgaddr: "assets/image/bill.png", text: "Generate Bill", Id: 3,),
+
 
 
                       ],
@@ -210,15 +213,25 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class CardBill extends StatelessWidget {
-  CardBill({required this.imgaddr, required this.text});
+  CardBill({required this.imgaddr, required this.text, required this.Id});
   final String imgaddr;
   final String text;
+  final int Id;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => Fetch()));
+        if(Id == 1){
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => BillGenerate()));
+        }else if(Id == 2){
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => Fetch()));
+        }else{
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => BillGenerate()));
+        }
+
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),

@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.paurush.iot_application_energy_meter">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="iot_application_energy_meter"
         android:icon="@mipmap/ic_launcher">
