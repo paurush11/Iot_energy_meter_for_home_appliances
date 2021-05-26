@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:iot_application_energy_meter/Threshold.dart';
+import 'package:iot_application_energy_meter/aboutus.dart';
 import 'package:iot_application_energy_meter/fetch.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -98,6 +100,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 Icons.people,
                 size: 20,
               ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => AboutUs()));
+              },
             ),
             Divider(
               height: 0.7,
@@ -127,13 +133,17 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               title: new Text(
-                "Export Bill",
+                "Set Threshold",
                 style: TextStyle(fontSize: 20),
               ),
               leading: new Icon(
                 Icons.import_export,
                 size: 20,
               ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => BillGenerate()));
+              },
             )
           ],
         ),
@@ -223,7 +233,7 @@ class CardBill extends StatelessWidget {
       onTap: (){
         if(Id == 1){
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => BillGenerate()));
+              builder: (BuildContext context) => setThreshold()));
         }else if(Id == 2){
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) => Fetch()));

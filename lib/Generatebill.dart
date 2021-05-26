@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:convert' as convert;
 import 'widgets/powercalc.dart';
@@ -44,6 +45,10 @@ class _BillGenerateState extends State<BillGenerate> {
       _postsController.add(res);
       return res;
     });
+  }
+  _launchURL(url) async {
+
+    await launch(url);
   }
 
 
@@ -143,15 +148,16 @@ class _BillGenerateState extends State<BillGenerate> {
                   print(netpower);
 
                   return Container(
-                      height: MediaQuery.of(context).size.height,
+                      height: MediaQuery.of(context).size.height*.9,
                       child: Column(
-                          children: [
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
 
                             Container(
                               decoration: BoxDecoration(
                                   border: Border.all(width: 4, color: Colors.grey)),
                               width: MediaQuery.of(context).size.width * .98,
-                              margin: EdgeInsets.all(10),
+                              margin: EdgeInsets.all(20),
                               padding: EdgeInsets.all(10),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,9 +243,10 @@ class _BillGenerateState extends State<BillGenerate> {
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         InkWell(
-
-
-
+                                          onTap: (){
+                                              String url = "https://wa.me/+919306334458?text=The bill amount is $NewBill \u20B9";
+                                            _launchURL(url);
+                                          },
                                           child: Container(
                                             color: Color(0xff003033),
                                               margin: EdgeInsets.all(10),
@@ -250,6 +257,10 @@ class _BillGenerateState extends State<BillGenerate> {
                                               ),)),
                                         ),
                                         InkWell(
+                                          onTap: () async{
+                                            String uri = Uri.encodeFull('mailto:paurushbatishfbd@gmail.com?subject=My Bill&body=My current Bill is $NewBill \u20B9.Please pay this upfront.');
+                                            await launch(uri);
+                                          },
                                           child: Container(
                                               color: Color(0xff003033),
                                               margin: EdgeInsets.all(10),
