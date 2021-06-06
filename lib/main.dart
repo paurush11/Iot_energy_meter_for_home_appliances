@@ -188,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   print(netpower);
 
                   return Container(
-                    height: MediaQuery.of(context).size.height*.8,
+                    height: MediaQuery.of(context).size.height*.85,
                     child: ListView(
                       children: [
                         Container(
